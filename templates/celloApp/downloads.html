@@ -1,0 +1,64 @@
+{% extends 'celloApp/base.html' %}
+{% block body %}
+
+{% if messages %}
+<div class="alert alert-success alert-dismissible">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+<br>
+<h4>File Download</h4>
+<div class="button-group">
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" name="entry.csv" value="Entry">&nbsp;&nbsp;
+        <input type="submit" class="btn btn-primary" name="JumboWhite.csv" value="JumboWhite">&nbsp;&nbsp;
+        <input type="submit" class="btn btn-primary" name="JumboBrown.csv" value="JumboBrown">&nbsp;&nbsp;
+        <input type="submit" class="btn btn-primary" name="JumboOther.csv" value="JumboOther">&nbsp;&nbsp;
+        <input type="submit" class="btn btn-primary" name="order.csv" value="Order">
+    </form>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" name="logFile" value="Log file">&nbsp;&nbsp;
+    </form>
+    <br>
+    <h4>Processed CSV</h4>
+    <form method="POST">
+        {% csrf_token %}
+        {{ ProcessCSVwhite }}&nbsp;&nbsp;
+        <input type="submit" class="btn btn-primary" name="process_csv_white" value="Download">&nbsp;&nbsp;
+    </form>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        {{ ProcessCSVbrown }}&nbsp;&nbsp;
+        <input type="submit" class="btn btn-primary" name="process_csv_brown" value="Download">&nbsp;&nbsp;
+    </form>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        {{ ProcessCSVother }}&nbsp;&nbsp;
+        <input type="submit" class="btn btn-primary" name="process_csv_other" value="Download">&nbsp;&nbsp;
+    </form>
+    <br>
+    <h4>Clear CSV</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ ClearFiles }}
+        <input type="submit" class="btn btn-primary" name="clrFile" value="Clear">
+    </form>
+    <br>
+    <br>
+
+    <!-- Reset all button -->
+    <!-- <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" name="reset" value="RESET">
+    </form> -->
+
+</div>
+
+{% endblock %}

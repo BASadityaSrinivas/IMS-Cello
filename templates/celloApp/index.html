@@ -1,0 +1,204 @@
+{% extends 'celloApp/base.html' %}
+{% load cello_tags %}
+{% block body %}
+
+
+{% if messages %}
+<div class="alert alert-success alert-dismissible">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<br>
+
+{% if raw %}
+<h4>Available Jumbos</h4>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Color</th>
+            <th>Stock in Hand</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in raw %}
+        <tr>
+            <td>{{ item.color }}</td>
+            <td>{{ item.quantityInStock }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<br>
+<hr style="height:3px; width:40%; border-width:0; color:gray; background-color:gray">
+
+
+<br>
+
+<h4>Processed Jumbos</h4>
+{% if process %}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Color</th>
+            <th>Length</th>
+            <th>Width</th>
+            <th>Quantity</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in process %}
+        <tr>
+            <td>{{item.color}}</td>
+            <td>{{item.length}}</td>
+            <td>{{item.width}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+<section id='processedForm'>
+<br>
+    <h4>Processed Form</h4>
+    <table>
+        <td>
+            <div>
+                <form action="#processedForm" method="POST">
+                    <br>
+                    {% csrf_token %}
+                    <table>
+                        {{ ProcessForm.as_table }}
+                    </table>
+                    <input type="submit" class="btn btn-primary" name="addProcess" value="Add">&nbsp;&nbsp;
+                    <input type="submit" class="btn btn-primary" name="delProcess" value="Delete">&nbsp;&nbsp;
+                    <input type="submit" class="btn btn-primary" name="addUsedJumbo" value="Add Jumbo Used">
+                </form>
+            </div>
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>
+            <ol>
+                {% for key, value in processTableItemsDisplay.items %}
+                <li>{{value}}</li>
+                {% endfor %}
+            </ol>
+            <form action='{{request.build_absolute_uri}}' method="POST">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-primary" name="clrProcessItems" value="Clear All">&nbsp;&nbsp;
+                <input type="submit" class="btn btn-primary" name="AddProcessedToTable" value="Add to Processed">
+            </form>
+        </td>
+    </table>
+</section>
+
+<br>
+<hr style="height:3px; width:40%; border-width:0; color:gray; background-color:gray">
+
+<br>
+
+<h4>Order details (In Progress)</h4>
+{% if orderTableInP %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>C ID</th>
+            <th>Customer Name</th>
+            <th>Order</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in orderTableInP %}
+        <tr>
+            <td>{{item.oID}}</td>
+            <td>{{item.cName}}</td>
+            <td>
+                <ol>
+                    {% for key in item.orderDetails|strToDict %}
+                        <li>{{key}}</li>
+                    {% endfor %}
+                </ol>
+            </td>
+            <td>{{item.status}}</td>
+            <td>{{item.date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<br>
+
+<h4>Order details (Not Paid)</h4>
+{% if orderTableNP %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Order</th>
+            <th>Status</th>
+            <th>Payment<th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in orderTableNP %}
+        <tr>
+            <td>{{item.oID}}</td>
+            <td>{{item.cName}}</td>
+            <td>
+                <ol>
+                    {% for key in item.orderDetails|strToDict %}
+                        <li>{{key}}</li>
+                    {% endfor %}
+                </ol>
+            </td>
+            <td>{{item.status}}</td>
+            <td>{{item.payment}}</td>
+            <td>{{item.date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<br>
+
+<div class="">
+    <h4>Customer Edit</h4>
+    <form method="POST">
+        <br>
+        <h5>Status</h5>
+        {% csrf_token %}
+        {{ CustEditFormSta }}
+        <input type="submit" class="btn btn-primary" name="editCustSta" value="Submit">
+    </form>
+    <form method="POST">
+        <br>
+        <h5>Payment</h5>
+        {% csrf_token %}
+        {{ CustEditFormPay }}
+        <input type="submit" class="btn btn-primary" name="editCustPay" value="Submit">
+    </form>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

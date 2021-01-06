@@ -1,0 +1,63 @@
+{% extends 'celloApp/base.html' %}
+{% load cello_tags %}
+{% block body %}
+
+{% if messages %}
+<div class="alert alert-success alert-dismissible">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+<br>
+
+<h4>Order details</h4>
+
+<center>
+    <form method="post">
+        {% csrf_token %}
+        From : <input type="date" name="fromDate">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        To : <input type="date" name="toDate">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input  type="submit" class="btn btn-primary" name="dateSelection" value="Go">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="submit" class="btn btn-primary" name="exportOrd" value="Export CSV">
+    </form>
+</center>
+
+{% if orderTable %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Order</th>
+            <th>Status</th>
+            <th>Payment<th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in orderTable %}
+        <tr>
+            <td>{{item.oID}}</td>
+            <td>{{item.cName}}</td>
+            <td>
+                <ol>
+                    {% for key in item.orderDetails|strToDict %}
+                        <li>{{key}}</li>
+                    {% endfor %}
+                </ol>
+            </td>
+            <td>{{item.status}}</td>
+            <td>{{item.payment}}</td>
+            <td>{{item.date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

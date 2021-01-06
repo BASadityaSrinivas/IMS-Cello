@@ -1,0 +1,46 @@
+{% extends 'celloApp/base.html' %}
+{% block body %}
+
+{% if messages %}
+<div class="alert alert-success alert-dismissible">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<br>
+<h4>Raw Material</h4>
+<div class="button-group">
+    <form method="POST">
+        <br>
+        {% csrf_token %}
+        {{ RawForm }} &nbsp;
+        <input type="submit" class="btn btn-primary" name="add" value="Add"> &nbsp;
+        <input type="submit" class="btn btn-primary" name="sub" value="Sub">
+    </form>
+</div>
+<br>
+
+{% if raw %}
+<h4>Available Jumbos</h4>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Color</th>
+            <th>Stock in Hand</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in raw %}
+        <tr>
+            <td>{{ item.color }}</td>
+            <td>{{ item.quantityInStock }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

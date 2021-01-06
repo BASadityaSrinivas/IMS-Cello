@@ -1,0 +1,61 @@
+{% extends 'celloApp/base.html' %}
+{% block body %}
+
+{% if messages %}
+<div class="alert alert-success alert-dismissible">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<br>
+
+<section id='orderForm'>
+<h4>Order Form</h4>
+    <table>
+        <td>
+            <div class="">
+                <form method="POST">
+                    <br>
+                    {% csrf_token %}
+                    <table>
+                        {{ orderForm.as_table }}
+                    </table>
+                    <input type="submit" class="btn btn-primary" name="addItems" value="Add"> &nbsp;
+                </form>
+            </div>
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>
+            <ol>
+                {% for key, value in orderTableItemsDisplay.items %}
+                <li>{{value}}</li>
+                {% endfor %}
+            </ol>
+            <form action='{{request.build_absolute_uri}}' method="POST">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-primary" name="clrItems" value="Clear All">
+            </form>
+        </td>
+    </table>
+</section>
+
+<br>
+
+
+<div class="">
+    <form method="POST">
+        <br>
+        {% csrf_token %}
+        <table>
+            {{ custOrderForm.as_table }}
+        </table>
+        <br>
+        <input type="submit" class="btn btn-primary" name="commitOrder" value="Submit">
+    </form>
+</div>
+
+<br>
+
+{% endblock %}

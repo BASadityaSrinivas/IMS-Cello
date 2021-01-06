@@ -1,0 +1,24 @@
+{% extends 'celloApp/base.html' %}
+{% block body %}
+
+{% if messages %}
+<div class="alert alert-success alert-dismissible">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+<br>
+
+<h4>Customer Add Form</h4>
+<div>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ CustAdd.as_table }} &nbsp;
+        </table> <br>
+        <input type="submit" class="btn btn-primary" name="addCustomer" value="Edit Customer">
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'celloApp/base.html' %}
+<!-- {% block title %}Login{% endblock %} -->
+{% block body %}
+
+{% if messages %}
+<div class="alert alert-success alert-dismissible">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<br>
+<br>
+    <div id="content-container" class="container p-none">
+        <div class="lgn-container col-lg-8">
+            <form id="login-form" method="POST">
+                {% csrf_token %}
+                <table class="table">
+                    <tr>
+                        <td><label for="id_username">Username</label></td>
+                        <td><input id="id_username" name="userName"
+                                   type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_password">Password</label></td>
+                        <td><input id="id_password" name="passWord"
+                                   type="password" class="form-control"></td>
+                    </tr>
+                </table>
+                {% if form.errors %}
+                    <p class=" label label-danger">
+                        Your username and password didn't match.
+                        Please try again.
+                    </p>
+                {% endif %}
+
+                <input type="submit" value="Login"
+                       class="btn btn-primary pull-right" />
+            </form>
+            <br>
+            <h6>Username : bas &nbsp;&nbsp;&nbsp; Password : bas</h6>
+        </div>
+    </div>
+{% endblock %}

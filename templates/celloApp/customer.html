@@ -1,0 +1,72 @@
+{% extends 'celloApp/base.html' %}
+{% block body %}
+
+{% if messages %}
+<div class="alert alert-success alert-dismissible">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<br>
+
+<h4>Customer Add Form</h4>
+<div>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ CustAdd.as_table }} &nbsp;
+        </table> <br>
+        <input type="submit" class="btn btn-primary" name="addCustomer" value="Add Customer">
+    </form>
+</div>
+
+<br>
+
+<div>
+    <h4 style="float: left;">Customer details</h4>
+    <form method="POST">
+        {% csrf_token %}
+        <input style="float: right;" type="submit" class="btn btn-primary" name="exportCust" value="Export CSV">
+    </form>
+</div>
+
+{% if cust %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>C ID</th>
+            <th>Customer Name</th>
+            <th>Address</th>
+            <th>E-Mail</th>
+            <th>GSTIN<th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in cust %}
+        <tr>
+            <td>{{item.cID}}</td>
+            <td>{{item.cName}}</td>
+            <td>
+                <!-- <ol>
+                    {% for key, value in orderDetails.items %}  # It is in String, change that to dict and try. Use template filters for that.
+                    <li>{{value}}</li>
+                    {% endfor %}
+                </ol> -->
+                {{item.address}}
+            </td>
+            <td>{{item.email}}</td>
+            <td>{{item.gstIN}}</td>
+            <td>
+                <a href="{% url 'edit_customer' item.pk %}" class="btn btn-warning btn-sm" role="button">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+
+{% endblock %}
