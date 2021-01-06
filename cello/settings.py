@@ -84,22 +84,6 @@ DATABASES = {
     }
 }
 
-############################################################################################
-# godaddy DB
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'i7333420_wp1',
-#         'USER': 'affixDashboard',
-#         'PASSWORD': 'affix',
-#         'HOST': '148.66.138.143',
-#         'PORT': '3306',
-#     }
-# }
-
-############################################################################################
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
