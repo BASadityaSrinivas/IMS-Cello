@@ -1,17 +1,6 @@
 import sqlite3, json, ast, datetime, psycopg2, mysql.connector
 from csvWrite import *
 
-# Godaddy connection
-# conn = LocalDB()
-
-# cPanel SSH Password = #cPanel123
-# database password = affxix
-##########################################################################################################
-
-# def goDaddyDB():
-#     conn = mysql.connector.connect(host="148.66.138.143",database="i7333420_wp1",user="affixDashboard",password="affix",port="3306")
-#     return conn
-
 def LocalDB():
     conn = sqlite3.connect('db.sqlite3')
     return conn
