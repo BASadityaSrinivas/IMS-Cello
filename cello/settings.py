@@ -21,7 +21,7 @@ SECRET_KEY = 'kf7r)x^liz(60ysiff7)#hgy4a3mtxwpz43t!-1g58l-f!x*gs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['inventory-cello-test.herokuapp.com', '127.0.0.1', 'affixdashboard.herokuapp.com']
+ALLOWED_HOSTS = ['ims-cello.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
